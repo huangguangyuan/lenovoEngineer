@@ -1,7 +1,7 @@
 <template>
   <div class="binding">
     <van-nav-bar title="手机绑定" left-arrow fixed @click-left="onClickLeft"/>
-    <h5>绑定信息</h5>
+    <h5>手机绑定</h5>
     <div class="bindingFrom">
       <div>
         <span>+86</span>
@@ -11,12 +11,12 @@
         <input type="text" placeholder="请输入短信验证码" v-model="SMS">
         <p @click="getCode" class="seedCode">发送验证码</p>
       </div>
-      <van-button type="default" size="large" class="btn-custom" @click="bingFn">绑 定</van-button>
+      <van-button type="default" size="large" class="btn-custom" @click="bingFn">登 录</van-button>
     </div>
-    <div class="tips">
+    <!-- <div class="tips">
       <p>*预约安装和查询进度前，请首先绑定手机号。</p>
       <i>(注: 这里的手机号须与您下订单时填写的收货人手机号一致)</i>
-    </div>
+    </div> -->
     <div class="footerInfo">
       全国服务热线:
       <a href="tel:4001368968">400-136-8968</a>
@@ -33,13 +33,6 @@ export default {
   },
   created() {
     var _this = this;
-    // if (sessionStorage.getItem("isType") == "isband") {
-    //   _this.$router.push({ path: "/bespeakFrom" });
-    // } else if (sessionStorage.getItem("isType") == "noband") {
-    //   _this.$router.push({ path: "/bespeakFrom2" });
-    // } else {
-    //   return false;
-    // }
   },
   methods: {
     // 返回按钮
@@ -50,7 +43,7 @@ export default {
     getCode() {
       var _this = this;
       _this.$http
-        .post("/index/applogin/getSmsCode", {
+        .post("/index/installerlogin/getSmsCode", {
           phone: _this.phone
         })
         .then(res => {
@@ -73,7 +66,7 @@ export default {
     // 绑定
     bingFn() {
       var _this = this;
-      var reqUrl = "/index/applogin/login";
+      var reqUrl = "/index/installerlogin/login";
       var data = {
         phone: _this.phone,
         code: _this.SMS
@@ -81,6 +74,7 @@ export default {
       _this.$http
         .post(reqUrl, data)
         .then(res => {
+          console.log(res);
           var user_type = res.data.data.user_type;
           sessionStorage.setItem("isType", res.data.data.user_type);
           if (res.data.code == 200) {
@@ -91,11 +85,7 @@ export default {
                 message: "绑定成功！"
               })
               .then(res => {
-                if (user_type == "isband") {
-                  _this.$router.push({ path: "/bespeakFrom" });
-                } else if (user_type == "noband") {
-                  _this.$router.push({ path: "/bespeakFrom2" });
-                }
+                _this.$router.push({path:'/orderList'});
               });
           }
         })

@@ -1,17 +1,64 @@
 <template>
   <div class="orderList">
     <van-nav-bar title="服务管理" fixed border />
-    <div class="tab-nav">
-      <span>未完成</span>
-      <span>已完成</span>
-    </div>
+    <van-tabs type="card">
+      <van-tab title="未完成">
+        <ul class="list">
+          <li v-for='item in noFinishList'>
+            <p>
+              <span>客户姓名：</span>
+              <span>{{item.username}}</span>
+            </p>
+            <p>
+              <span>电 话：</span>
+              <a href="tel:13268005122">
+                <van-icon name="phone" /> 拨号
+              </a>
+            </p>
+            <p>
+              <span>订单号：</span>
+              <span>{{item.orders_id}}</span>
+            </p>
+            <p>
+              <span>预约时间：</span>
+              <span>{{item.appoint_time}}</span>
+            </p>
+            <p>
+              <span>安装地址：</span>
+              <span>{{item.install_address}}</span>
+            </p>
+            <van-button plain type="primary" size='small'>未接单</van-button>
+          </li>
+        </ul>
+      </van-tab>
+      <van-tab title="已完成">
+
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 <script>
 export default {
   name: "orderList",
   data() {
-    return {};
+    return {
+      tabNav:['未完成','已完成'],
+      noFinishList:[]
+    };
+  },
+  mounted(){
+    this.getNoFinishList();
+  },
+  methods:{
+    // 获取未完成列表
+    getNoFinishList(){
+      var _this = this;
+      var reqUrl = '/index/installer/getUnfinishOrderList';
+      _this.$http.post(reqUrl,{}).then(res => {
+        console.log(res.data.data);
+        _this.noFinishList = res.data.data;
+      })
+    }
   }
 };
 </script>
@@ -19,11 +66,22 @@ export default {
 <style scoped lang="scss">
 .orderList{
     position: absolute;width: 100%;height: 100%;top:0;left: 0;box-sizing: border-box;background-color: #ededed;padding-top:46px;
-    .tab-nav{
-        width: 350px;margin: 20px auto;display: flex;
-        span{
-            font-size:12px;color: #c7c7c7;flex: 1;
+    .van-nav-bar{z-index: 99;}
+    .van-tabs{
+      margin-top: 20px;
+    }
+    .list{
+      li{
+        padding:13px;background-color: #ffffff;position: relative;margin: 10px auto 10px;
+        p{
+          display: flex;font-size: 14px;margin-top: 6px;justify-content: flex-start;align-items: center;
+          span:nth-child(1){width: 80px;text-align: right;}
+          span:nth-child(2){width: 205px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+          a{padding:3px 10px;background-color: #f7f7f7;border:1px #ebebeb solid;border-radius: 8px;color: #8fc31f;font-size: 14px;display: flex;justify-content: center;align-items: center;}
         }
+        .van-button{position: absolute;bottom: 13px;right: 13px;}
+      }
+      
     }
 }
 </style>

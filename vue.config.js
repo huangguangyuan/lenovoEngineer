@@ -77,12 +77,12 @@ module.exports = {
       //proxy: 'http://192.168.103.57:9006' // 配置跨域处理,只有一个代理
       // 配置多个代理
       proxy: {
-            "/api": {
-              target: "http://192.168.103.57:9006",//目标主机 
-              ws: true,//代理的WebSockets  
+            "/": {
+              target: "http://lenovo.starrydigital.cn",//目标主机 
+              ws: false,//代理的WebSockets  
               changeOrigin: true,//需要虚拟主机站点 
               pathRewrite: {
-                  '^/api': '/' 
+                  '^/': '/' 
               }
             }
        }
