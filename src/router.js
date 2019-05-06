@@ -33,6 +33,12 @@ export default new Router({
       path:'/orderList',
       name:'orderList',
       component: () => import('./views/orderList.vue')
+    },
+    // 订单详情
+    {
+      path:'/orderDetails',
+      name:'orderDetails',
+      component: () => import('./views/orderDetails.vue')
     }
   ]
 })
