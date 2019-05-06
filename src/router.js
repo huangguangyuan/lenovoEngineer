@@ -32,13 +32,22 @@ export default new Router({
     {
       path:'/orderList',
       name:'orderList',
+      meta:{index:1},
       component: () => import('./views/orderList.vue')
     },
     // 订单详情
     {
       path:'/orderDetails',
       name:'orderDetails',
+      meta:{index:2},
       component: () => import('./views/orderDetails.vue')
+    },
+    // 安装上传图片
+    {
+      path:'/installUploader',
+      name:'installUploader',
+      meta:{index:2},
+      component: () => import('./views/installUploader.vue')
     }
   ]
 })
