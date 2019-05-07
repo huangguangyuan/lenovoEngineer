@@ -11,7 +11,7 @@
             </p>
             <p>
               <span>电 话：</span>
-              <a :href="'tel:'+item.phone">
+              <a href="javascript:;" @click='dialFun(item.id)'>
                 <van-icon name="phone" /> 拨号
               </a>
             </p>
@@ -119,6 +119,20 @@ export default {
         })
         _this.$router.push({path:'/orderDetails'});
       }
+    },
+    // 拨号
+    dialFun(id){
+      var _this = this;
+      var reqUrl = '/index/installer/installerCallUser';
+      var data = {id:id}
+      _this.$http.post(reqUrl,data).then(res => {
+        if(res.data.code == 200){
+          window.location.href = "tel:"+res.data.data.phone_x;
+        }else{
+          _this.$dialog.alert({message:res.data.msg});
+        }
+        
+      })
     }
   }
 };
