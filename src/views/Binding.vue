@@ -1,6 +1,6 @@
 <template>
   <div class="binding">
-    <van-nav-bar title="手机绑定" left-arrow fixed @click-left="onClickLeft"/>
+    <van-nav-bar title="手机绑定" fixed/>
     <h5>手机绑定</h5>
     <div class="bindingFrom">
       <div>

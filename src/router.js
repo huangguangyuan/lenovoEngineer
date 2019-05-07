@@ -46,8 +46,29 @@ export default new Router({
     {
       path:'/installUploader',
       name:'installUploader',
-      meta:{index:2},
+      meta:{index:3},
       component: () => import('./views/installUploader.vue')
+    },
+    // 维修上传图片
+    {
+      path:'/repairUploader',
+      name:'repairUploader',
+      meta:{index:3},
+      component: () => import('./views/repairUploader.vue')
+    },
+    // 安装完成表单
+    {
+      path:'/installForm',
+      name:'installForm',
+      meta:{index:4},
+      component: () => import('./views/installForm.vue')
+    },
+    // 未安装完成表单
+    {
+      path:'/noFinish',
+      name:'noFinish',
+      meta:{index:4},
+      component: () => import('./views/noFinish.vue')
     }
   ]
 })

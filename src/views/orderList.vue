@@ -112,7 +112,7 @@ export default {
     //接单
     receiptFun(val,id){
       var _this = this;
-      if(val == 0){
+      if(val == 0 || val == 1){
         _this.$store.commit({
           type:'getOrderID',
           orderID:id
