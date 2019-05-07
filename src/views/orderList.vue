@@ -54,7 +54,7 @@
               <span>安装地址：</span>
               <span>{{item.install_address}}</span>
             </p>
-            <van-button plain type="primary" size='small'>未接单</van-button>
+            <van-button plain type="primary" size='small'>{{item.statusTxt}}</van-button>
           </li>
         </ul>
       </van-tab>
@@ -106,7 +106,24 @@ export default {
       var _this = this;
       var reqUrl = '/index/installer/getFinishOrderList';
       _this.$http.get(reqUrl,{}).then(res => {
-        _this.finishList = res.data.data;
+        _this.finishList = res.data.data.map(item => {
+          switch (item.status)
+          {
+            case -1:
+              item.statusTxt = '已取消';
+              break;
+            case 0:
+              item.statusTxt = '未接单';
+              break;
+            case 1:
+              item.statusTxt = '已接单';
+              break;
+            case 2:
+              item.statusTxt = '已完成';
+              break;
+          }
+          return item;
+        });;
       })
     },
     //接单

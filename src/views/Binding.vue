@@ -75,8 +75,6 @@ export default {
         .post(reqUrl, data)
         .then(res => {
           console.log(res);
-          var user_type = res.data.data.user_type;
-          sessionStorage.setItem("isType", res.data.data.user_type);
           if (res.data.code == 200) {
             sessionStorage.setItem("isType", res.data.data.user_type);
             _this.$dialog

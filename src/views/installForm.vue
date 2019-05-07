@@ -71,11 +71,11 @@ export default {
             areaList:areaList,
             isShowSuccess:false,//是否显示成功
             info:{
-                sn:'64912313244',
-                username:'ilock',
-                userphone:'13480250742',
+                sn:'',
+                username:'',
+                userphone:'',
                 area:'',
-                address:'花东镇山下村是一对',
+                address:'',
             }//表单信息
         }
     },
