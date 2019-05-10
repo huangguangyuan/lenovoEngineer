@@ -32,6 +32,7 @@
     </div>
 </template>
 <script>
+import lrz from 'lrz';
 export default {
     name:'installUploader',
     data(){
@@ -50,14 +51,25 @@ export default {
         // 读取图片
         onRead(file, detail) {
             var _this = this;
-            _this.panoramaSrc = file.content;
-            _this.isShowPanorama = true;
+            _this.runAsync(file.content).then(res => {
+                _this.panoramaSrc = res.base64;
+                _this.isShowPanorama = true;
+            })
         },
         // 读取图片
         onRead2(file, detail) {
             var _this = this;
-            _this.codeSrc = file.content;
-            _this.isShowCode = true;
+            _this.runAsync(file.content).then(res => {
+                _this.codeSrc = res.base64;
+                _this.isShowCode = true;
+            })
+        },
+        // 异步获取返回压缩后的图片
+        runAsync(fileData){
+            var p = new Promise((resolve,reject)=>{
+                resolve(lrz(fileData,{width:340,quality:0.6}));
+            })
+            return p;
         },
         // 确认上传
         confirmFun(){

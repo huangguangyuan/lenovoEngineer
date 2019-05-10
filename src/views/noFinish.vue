@@ -40,6 +40,7 @@ z<template>
   </div>
 </template>
 <script>
+import lrz from 'lrz';
 export default {
   name: "noFinish",
   data() {
@@ -63,14 +64,25 @@ export default {
     // 上传图片1
     onRead1(file, detail) {
         var _this = this;
-        _this.imgSrc1 = file.content;
-        _this.isShowImg1 = true;
+        _this.runAsync(file.content).then(res => {
+          _this.imgSrc1 = res.base64;
+          _this.isShowImg1 = true;
+        })
     },
     // 上传图片2
     onRead2(file, detail) {
         var _this = this;
-        _this.imgSrc2 = file.content;
-        _this.isShowImg2 = true;
+        _this.runAsync(file.content).then(res => {
+          _this.imgSrc2 = res.base64;
+          _this.isShowImg2 = true;
+        })
+    },
+    // 异步获取返回压缩后的图片
+    runAsync(fileData){
+        var p = new Promise((resolve,reject)=>{
+            resolve(lrz(fileData,{width:340,quality:0.6}));
+        })
+        return p;
     },
     // 确认提交
     confirmFun(){

@@ -10,6 +10,7 @@
   "dependencies": {
     "amfe-flexible": "^2.2.1",
     "js-md5": "^0.7.3",
+    "lrz": "^4.9.40",
     "postcss-pxtorem": "^4.0.1",
     "vant": "^1.6.9",
     "vue": "^2.6.6",

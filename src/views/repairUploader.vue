@@ -41,6 +41,7 @@
     </div>
 </template>
 <script>
+import lrz from 'lrz';
 export default {
     name:'repairUploader',
     data(){
@@ -61,20 +62,36 @@ export default {
         // 维修前图片
         onReadBefore(file, detail) {
             var _this = this;
-            _this.beforeSrc = file.content;
-            _this.isShowBeforeImg = true;
+            _this.runAsync(file.content).then(res => {
+                _this.beforeSrc = res.base64;
+                _this.isShowBeforeImg = true;
+            })
+            
         },
         // 维修后图片
         onReadAfter(file, detail) {
             var _this = this;
-            _this.afterSrc = file.content;
-            _this.isShowAfterImg = true;
+            _this.runAsync(file.content).then(res => {
+                _this.afterSrc = res.base64;
+                _this.isShowAfterImg = true;
+            })
+            
         },
         // 读取图片
         onRead2(file, detail) {
             var _this = this;
-            _this.codeSrc = file.content;
-            _this.isShowCode = true;
+            _this.runAsync(file.content).then(res => {
+                _this.codeSrc = res.base64;
+                _this.isShowCode = true;
+            })
+            
+        },
+        // 异步获取返回压缩后的图片
+        runAsync(fileData){
+            var p = new Promise((resolve,reject)=>{
+                resolve(lrz(fileData,{width:340,quality:0.6}));
+            })
+            return p;
         },
         // 确认上传
         confirmFun(){
