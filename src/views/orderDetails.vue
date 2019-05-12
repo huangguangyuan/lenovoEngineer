@@ -102,7 +102,7 @@ export default {
       _this.$http.post(reqUrl,data).then(res => {
         console.log(res);
         _this.username = res.data.data.username,
-        _this.phone = res.data.data.phone,
+        _this.phone = res.data.data.phone.substring(0,3)+"****"+res.data.data.phone.substring(8,11),
         _this.orders_id = res.data.data.orders_id,
         _this.appoint_time = res.data.data.appoint_time,
         _this.install_address = res.data.data.install_address,

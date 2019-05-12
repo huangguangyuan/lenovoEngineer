@@ -1,6 +1,6 @@
 <template>
   <div class="binding">
-    <van-nav-bar title="手机绑定" fixed/>
+    <!-- <van-nav-bar title="手机绑定" fixed/> -->
     <h5>手机绑定</h5>
     <div class="bindingFrom">
       <div>
@@ -9,7 +9,7 @@
       </div>
       <div>
         <input type="text" placeholder="请输入短信验证码" v-model="SMS">
-        <p @click="getCode" class="seedCode">发送验证码</p>
+        <p @click="getCode" class="seedCode">{{countDownTxt}}</p>
       </div>
       <van-button type="default" size="large" class="btn-custom" @click="bingFn">登 录</van-button>
     </div>
@@ -28,7 +28,9 @@ export default {
   data() {
     return {
       phone: "",
-      SMS: ""
+      SMS: "",
+      isClick:false,//是否已点击获取验证码
+      countDownTxt:'发送验证码',
     };
   },
   created() {
@@ -42,12 +44,17 @@ export default {
     // 获取验证码
     getCode() {
       var _this = this;
+      if(_this.isClick){
+        return false;
+      }
       _this.$http
         .post("/index/installerlogin/getSmsCode", {
           phone: _this.phone
         })
         .then(res => {
           if (res.data.code == 200) {
+            _this.isClick = true;
+            _this.countDownFun();
             _this.$dialog.alert({
               title: "发送成功",
               message: "发送信息成功，请注意接收验证码~"
@@ -62,6 +69,21 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    // 倒计时
+    countDownFun(){
+      var _this = this;
+      var num = 60;
+      var timer = setInterval(function(){
+        if(num<=0){
+          clearInterval(timer);
+          _this.countDownTxt = '发送验证码';
+          _this.isClick = false;
+          return false;
+        }
+        num --;
+        _this.countDownTxt = num+'(s)'
+      },1000);
     },
     // 绑定
     bingFn() {
