@@ -96,7 +96,6 @@ export default {
       _this.$http
         .post(reqUrl, data)
         .then(res => {
-          console.log(res);
           if (res.data.code == 200) {
             sessionStorage.setItem("isType", res.data.data.user_type);
             _this.$dialog
@@ -106,6 +105,12 @@ export default {
               })
               .then(res => {
                 _this.$router.push({path:'/orderList'});
+              });
+          }else{
+            _this.$dialog
+              .alert({
+                title: "提 示",
+                message: res.data.msg
               });
           }
         })

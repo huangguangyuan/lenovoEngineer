@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.use(VueAxios,axios);
 Vue.use(Vant);
 
-new Vue({
+let myVue = new Vue({
   router,
   store,
   render: h => h(App)
