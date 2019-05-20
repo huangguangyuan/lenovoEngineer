@@ -1,7 +1,8 @@
 <template>
   <div class="binding">
     <!-- <van-nav-bar title="手机绑定" fixed/> -->
-    <h5>手机绑定</h5>
+    <!-- <h5>手机绑定</h5> -->
+    <img src="@/assets/images/logo-buoy.png" alt="" class="logo-buoy">
     <div class="bindingFrom">
       <div>
         <span>+86</span>
@@ -32,9 +33,6 @@ export default {
       isClick:false,//是否已点击获取验证码
       countDownTxt:'发送验证码',
     };
-  },
-  created() {
-    var _this = this;
   },
   methods: {
     // 返回按钮
@@ -104,7 +102,7 @@ export default {
                 message: "绑定成功！"
               })
               .then(res => {
-                _this.$router.push({path:'/orderList'});
+                _this.$router.push({path:'/'});
               });
           }else{
             _this.$dialog
@@ -135,6 +133,9 @@ export default {
   box-sizing: border-box;
   padding: 0 14px;
   background-color: #ededed;
+  .logo-buoy{
+    display: block;
+  }
   h5 {
     font-size: 19px;
     font-weight: 500;

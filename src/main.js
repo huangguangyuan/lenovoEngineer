@@ -19,3 +19,18 @@ let myVue = new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  // console.log(response);
+  if(response.data.code === -1){
+    router.replace({
+      path: '/binding' // 到登录页重新获取token
+    })
+  }
+  return response;
+}, function (error) {
+  // 对响应错误做点什么
+  return Promise.reject(error);
+});
